@@ -1,0 +1,172 @@
+/* Reset and base styles */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Body styling */
+body {
+  font-family: Arial, sans-serif;
+  background: linear-gradient(to bottom right, #797878, #7b7979);
+  color: aliceblue;
+}
+
+/* Heading styling */
+h2 {
+  color: rgb(37, 37, 38);
+}
+
+/* Main container styling */
+.container {
+  max-width: 800px;
+  margin: 100px auto;
+  padding: 30px 40px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto 1fr auto;
+  gap: 24px 32px;
+  background-color: rgb(19, 18, 18);
+  border-radius: 12px;
+}
+
+/* Header and footer spanning both columns */
+.container > .header,
+.footer {
+  grid-column: span 2;
+  text-align: center;
+}
+
+/* QR content section (customize as needed) */
+.qr-content {
+  /* align-self: flex-end; */
+  /* margin-bottom: 3.2px; */
+}
+
+/* QR preview section styling */
+.preview-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 16px;
+  background: white;
+  border-radius: 8px;
+}
+
+/* Form styling */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Label styling */
+label {
+  display: flex;
+  flex-direction: column;
+  font-weight: bold;
+  color: rgb(230, 222, 222);
+  margin: 0;
+}
+
+/* Input styling */
+input {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+/* Color input styling */
+input[type="color"] {
+  padding: 0px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 50%;
+}
+
+/* Select dropdown styling */
+select {
+  border: none;
+  padding: 6px;
+}
+
+/* Button styling */
+button {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  background: rgb(70, 68, 68);
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+/* ===========================
+   Responsive Design
+   =========================== */
+
+/* For tablets and below */
+@media (max-width: 900px) {
+  .container {
+    max-width: 98vw;
+    padding: 20px 10px;
+    gap: 16px 12px;
+  }
+}
+
+/* For mobile devices */
+@media (max-width: 600px) {
+  .container {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr auto;
+    margin: 30px 4px;
+    padding: 10px 2vw;
+    gap: 12px 0;
+  }
+
+  .container > .header,
+  .footer {
+    grid-column: span 1;
+  }
+
+  .preview-section {
+    padding: 8px;
+    min-height: 180px;
+  }
+
+  form {
+    gap: 6px;
+  }
+
+  input,
+  select,
+  button {
+    font-size: 15px;
+    padding: 7px;
+  }
+}
+
+/* For very small screens */
+@media (max-width: 400px) {
+  .container {
+    padding: 4px 1vw;
+    margin: 10px 0;
+  }
+
+  .preview-section {
+    padding: 4px;
+  }
+
+  h2 {
+    font-size: 18px;
+  }
+
+  button {
+    padding: 8px 12px;
+    font-size: 14px;
+  }
+}

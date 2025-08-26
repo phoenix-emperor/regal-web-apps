@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- <title>QR Code Generator</title> -->
+    <link rel="stylesheet" href="src/style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <header class="header">
+        <h1>QR Code Generator</h1>
+      </header>
+
+      <section id="qr-content" class="qr-content">
+        <form>
+          <label for="qr-data"
+            >Text or Link:
+            <input
+              type="text"
+              name="qr-data"
+              id="qr-data"
+              placeholder="Enter text or link"
+            />
+          </label>
+
+          <label for="qr-icon">
+            Icon:
+            <input type="file" name="qr-icon" id="qr-icon" accept="image/*" />
+          </label>
+
+          <!-- <label for="qr-width"
+              >Width:
+              <input
+                type="number"
+                name="qr-width"
+                id="qr-width"
+                min="100"
+                max="600"
+              />
+            </label>
+
+            <label for="qr-height"
+              >Height:
+              <input
+                type="number"
+                name="qr-height"
+                id="qr-height"
+                min="100"
+                max="600"
+              />
+            </label> -->
+
+          <label for="qr-color"
+            >Color:
+            <input type="color" name="qr-color" id="qr-color" value="#000000" />
+          </label>
+
+          <label for="qr-bg-color"
+            >Background Color:
+            <input
+              type="color"
+              name="qr-bg-color"
+              id="qr-bg-color"
+              value="#ffffff"
+            />
+          </label>
+
+          <label for="qr-type">
+            Type:
+            <select name="qr-type" id="qr-type">
+              <option value="square">Square</option>
+              <option value="rounded">Rounded</option>
+              <option value="dots">Dots</option>
+              <option value="classy">Classy</option>
+              <option value="classy-rounded">Classy Rounded</option>
+              <option value="extra-rounded">Extra Rounded</option>
+            </select>
+          </label>
+
+          <label for="qr-download">
+            <select name="qr-download" id="qr-download">
+              <option value="png">PNG</option>
+              <option value="jpeg">JPEG</option>
+              <option value="webp">WEBP</option>
+              <option value="svg">SVG</option>
+            </select>
+          </label>
+
+          <!-- <button id="generate-btn">Generate QR Code</button> -->
+          <button id="download-btn">Download QR Code</button>
+        </form>
+      </section>
+
+      <section class="preview-section">
+        <h2>QR Code Preview</h2>
+        <div id="qr-result"></div>
+      </section>
+
+      <footer class="footer">
+        <p>Regal &copy; 2025 QR Code Generator</p>
+      </footer>
+    </div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

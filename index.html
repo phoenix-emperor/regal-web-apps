@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Web Apps Launcher</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background: #f5f5f5;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        margin: 0;
+      }
+
+      h1 {
+        margin-bottom: 20px;
+      }
+
+      .app-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 20px;
+        width: 80%;
+        max-width: 800px;
+      }
+
+      .app-card {
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        transition: transform 0.2s ease-in-out;
+      }
+
+      .app-card:hover {
+        transform: scale(1.05);
+      }
+
+      a {
+        text-decoration: none;
+        color: #333;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>My Web Apps</h1>
+    <div class="app-list">
+      <div class="app-card">
+        <a href="http://localhost:5173" target="_blank">QR Code Generator</a>
+      </div>
+      <div class="app-card">
+        <a href="http://localhost:5174" target="_blank">Todo App</a>
+      </div>
+      <div class="app-card">
+        <a href="http://localhost:5175" target="_blank">Weather Dashboard</a>
+      </div>
+    </div>
+  </body>
+</html>
