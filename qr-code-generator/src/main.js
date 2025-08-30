@@ -1,6 +1,5 @@
 import QRCodeStyling from "qr-code-styling";
 
-// Create QR code instance with defaults
 const qrCode = new QRCodeStyling({
   width: 300,
   height: 300,
@@ -16,68 +15,105 @@ const qrCode = new QRCodeStyling({
   },
 });
 
-// Append QR to result container
-const container = document.getElementById("qr-result");
-qrCode.append(container);
+const qrResult = document.getElementById("qr-result");
+const downloadBtn = document.getElementById("download-btn");
+const qrDataInput = document.getElementById("qr-data");
+const qrIconInput = document.getElementById("qr-icon");
+const qrColorInput = document.getElementById("qr-color");
+const qrBGColorInput = document.getElementById("qr-bg-color");
+const qrTypeInput = document.getElementById("qr-type");
+const qrDownloadInput = document.getElementById("qr-download");
+const warningMsg = document.getElementById("warning"); // <p id="warning"></p> in your HTML
 
-// Helper to update QR code
-function updateQRCode() {
-  const qr_data =
-    document.getElementById("qr-data").value || "https://google.com";
-  const qr_icon = document.getElementById("qr-icon");
-  // const qr_width = document.getElementById("qr-width").value || 300;
-  // const qr_height = document.getElementById("qr-height").value || 300;
-  const qr_color = document.getElementById("qr-color").value || "#000000";
-  const qr_bg_color = document.getElementById("qr-bg-color").value || "#ffffff";
-  const qr_type = document.getElementById("qr-type").value || "square";
+// Append QR to the page
+qrCode.append(qrResult);
 
-  let icon = "";
-  if (qr_icon.files.length > 0) {
-    icon = URL.createObjectURL(qr_icon.files[0]);
-  }
+/* ------------------------
+   HELPER FUNCTIONS
+-------------------------*/
 
-  qrCode.update({
-    data: qr_data,
-    image: icon,
-    // width: Number(qr_width),
-    // height: Number(qr_height),
-    dotsOptions: {
-      color: qr_color,
-      type: qr_type,
-    },
-    backgroundOptions: {
-      color: qr_bg_color,
-    },
-  });
+// Convert HEX color to luminance (brightness value)
+function getLuminance(hex) {
+  const c = hex.substring(1); // remove '#'
+  const rgb = parseInt(c, 16);
+  const r = (rgb >> 16) & 0xff;
+  const g = (rgb >> 8) & 0xff;
+  const b = rgb & 0xff;
+  // Standard relative luminance formula (per ITU-R BT.601)
+  return 0.299 * r + 0.587 * g + 0.114 * b;
 }
 
-// Listen for input changes for live preview
-[
-  "qr-data",
-  // "qr-width",
-  // "qr-height",
-  "qr-color",
-  "qr-bg-color",
-  "qr-type",
-].forEach((id) => {
-  document.getElementById(id).addEventListener("input", updateQRCode);
-});
-document.getElementById("qr-icon").addEventListener("change", updateQRCode);
+// Compare foreground (dots) and background luminance
+function checkContrast(fg, bg) {
+  const fgLum = getLuminance(fg);
+  const bgLum = getLuminance(bg);
+  return Math.abs(fgLum - bgLum);
+}
 
-// Generate new QR code (optional, can just call updateQRCode)
-document.getElementById("generate-btn").addEventListener("click", (e) => {
-  e.preventDefault();
-  updateQRCode();
-});
+// Show or clear a warning if contrast is too low
+function validateContrast() {
+  const contrast = checkContrast(qrColorInput.value, qrBGColorInput.value);
+  if (contrast < 100) {
+    warningMsg.textContent =
+      "⚠️ Low contrast detected — use dark dots on a light background for best scan results.";
+  } else {
+    warningMsg.textContent = "";
+  }
+}
 
-// Download QR code
-document.getElementById("download-btn").addEventListener("click", (e) => {
-  e.preventDefault();
+/* ------------------------
+   EVENT LISTENERS
+-------------------------*/
 
-  const qr_download = document.getElementById("qr-download").value || "png";
-
-  qrCode.download({
-    name: "qr-code",
-    extension: qr_download,
+// Update QR code when typing data
+qrDataInput.addEventListener("input", () => {
+  qrCode.update({
+    data: qrDataInput.value || "https://google.com",
   });
 });
+
+// Handle file upload for logo
+qrIconInput.addEventListener("change", () => {
+  const file = qrIconInput.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = function (e) {
+    qrCode.update({
+      image: e.target.result,
+    });
+  };
+  reader.readAsDataURL(file);
+});
+
+// Dot color
+qrColorInput.addEventListener("input", () => {
+  qrCode.update({
+    dotsOptions: { color: qrColorInput.value },
+  });
+  validateContrast(); // check color contrast after update
+});
+
+// Background color
+qrBGColorInput.addEventListener("input", () => {
+  qrCode.update({
+    backgroundOptions: { color: qrBGColorInput.value },
+  });
+  validateContrast(); // check color contrast after update
+});
+
+// Dot type (square, rounded, dots)
+qrTypeInput.addEventListener("change", () => {
+  qrCode.update({
+    dotsOptions: { type: qrTypeInput.value },
+  });
+});
+
+// Download QR
+function downloadQrCode() {
+  qrCode.download({
+    name: "qr-code",
+    extension: qrDownloadInput.value || "png",
+  });
+}
+downloadBtn.addEventListener("click", downloadQrCode);

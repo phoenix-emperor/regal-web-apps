@@ -22,7 +22,7 @@ h2 {
 /* Main container styling */
 .container {
   max-width: 800px;
-  margin: 100px auto;
+  margin: 60px auto;
   padding: 30px 40px;
   display: grid;
   grid-template-columns: 1fr 1fr;
