@@ -15,6 +15,10 @@ body {
 }
 
 /* Heading styling */
+.header {
+  height: 70px;
+}
+
 h2 {
   color: rgb(37, 37, 38);
 }
@@ -120,6 +124,12 @@ button {
 
 /* For mobile devices */
 @media (max-width: 600px) {
+  .header {
+    height: 80px;
+  }
+  .header p {
+    font-size: 13px;
+  }
   .container {
     grid-template-columns: 1fr;
     grid-template-rows: auto 1fr auto;
